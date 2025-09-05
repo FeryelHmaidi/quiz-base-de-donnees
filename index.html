@@ -21,7 +21,7 @@
 </div>
 
 <!-- Minuteur -->
-<p id="timer">Temps restant : 5s</p>
+<p id="timer">Temps restant : 10s</p>
 
 <!-- Étape 2 : Questions -->
 <form id="quizForm">
@@ -80,7 +80,7 @@
   let current = 0;
   let score = 0;
   let timer;
-  let timeLeft = 5;
+  let timeLeft = 10;
   let userName = "";
 
   function startQuiz() {
@@ -102,7 +102,7 @@
     const qElement = document.getElementById(currentId);
     if (qElement) {
       qElement.style.display = 'block';
-      timeLeft = 5;
+      timeLeft = 10;
       document.getElementById('timer').textContent = `Temps restant : ${timeLeft}s`;
       timer = setInterval(() => {
         timeLeft--;
@@ -154,11 +154,7 @@
       body: JSON.stringify({ nom: userName, score: score, date: new Date().toLocaleString() })
     });
   }
-  // 🔗https://docs.google.com/spreadsheets/d/1mptW-Tuwl1Zsl6blyLydjscb8pW5Ktw5sJ875noi8CI/edit?usp=sharing
 </script>
 
-
 </body>
- 
-
 </html>
