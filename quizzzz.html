@@ -103,10 +103,10 @@
     if (qElement) {
       qElement.style.display = 'block';
       timeLeft = 10;
-      document.getElementById('timer').textContent = `Temps restant : ${timeLeft}s`;
+      document.getElementById('timer').textContent = `Temps restant : ${timeLeft}10`;
       timer = setInterval(() => {
         timeLeft--;
-        document.getElementById('timer').textContent = `Temps restant : ${timeLeft}s`;
+        document.getElementById('timer').textContent = `Temps restant : ${timeLeft}10`;
         if (timeLeft <= 0) {
           clearInterval(timer);
           checkAnswer(currentId);
@@ -157,4 +157,5 @@
 </script>
 
 </body>
+
 </html>
