@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz : Base de Données</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    article {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .question {
+      font-size: 18px;
+      margin: 20px 0 10px;
+      color: #34495e;
+    }
+    label {
+      display: block;
+      background-color: #ecf0f1;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #2980b9;
+    }
+    #result, #classement {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+    #classement ul {
+      padding-left: 20px;
+    }
+    .winner {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz : C’est quoi une base de données ?</h1>
+
+  <article>
+    <form id="quizForm">
+      <p class="question">Votre nom :</p>
+      <input type="text" name="username" id="username" required placeholder="Entrez votre nom complet" style="width: 100%; padding: 10px; margin-bottom: 20px;"/>
+
+      <!-- Questions -->
+      <p class="question">1. Qu’est-ce qu’une base de données ?</p>
+      <label><input type="radio" name="q1" value="a"> Un logiciel de retouche photo</label>
+      <label><input type="radio" name="q1" value="b"> Un endroit où l’on stocke et organise des données</label>
+      <label><input type="radio" name="q1" value="c"> Une page web statique</label>
+      <label><input type="radio" name="q1" value="d"> Un antivirus</label>
+
+      <p class="question">2. Quel langage est utilisé pour interagir avec une base de données relationnelle ?</p>
+      <label><input type="radio" name="q2" value="a"> HTML</label>
+      <label><input type="radio" name="q2" value="b"> CSS</label>
+      <label><input type="radio" name="q2" value="c"> SQL</label>
+      <label><input type="radio" name="q2" value="d"> JavaScript</label>
+
+      <p class="question">3. Laquelle de ces bases de données est relationnelle ?</p>
+      <label><input type="radio" name="q3" value="a"> MongoDB</label>
+      <label><input type="radio" name="q3" value="b"> MySQL</label>
+      <label><input type="radio" name="q3" value="c"> Redis</label>
+      <label><input type="radio" name="q3" value="d"> Firebase</label>
+
+      <p class="question">4. Dans une base de données relationnelle, les données sont organisées en :</p>
+      <label><input type="radio" name="q4" value="a"> Images</label>
+      <label><input type="radio" name="q4" value="b"> Fichiers ZIP</label>
+      <label><input type="radio" name="q4" value="c"> Tables avec lignes et colonnes</label>
+      <label><input type="radio" name="q4" value="d"> Graphiques</label>
+
+      <p class="question">5. Quel est le rôle principal d’un SGBD ?</p>
+      <label><input type="radio" name="q5" value="a"> Dessiner des diagrammes</label>
+      <label><input type="radio" name="q5" value="b"> Créer des pages web</label>
+      <label><input type="radio" name="q5" value="c"> Gérer, stocker et sécuriser les données</label>
+      <label><input type="radio" name="q5" value="d"> Compiler du code</label>
+
+      <button type="submit" class="btn">Valider et voir le classement</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="classement"></div>
+  </article>
+
+  <script>
+    const participants = [];
+
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('username').value.trim();
+      if (!name) {
+        alert("Veuillez entrer votre nom !");
+        return;
+      }
+
+      const answers = {
+        q1: 'b',
+        q2: 'c',
+        q3: 'b',
+        q4: 'c',
+        q5: 'c'
+      };
+
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {
+        const q = document.querySelector(`input[name="q${i}"]:checked`);
+        if (q && q.value === answers[`q${i}`]) {
+          score++;
+        }
+      }
+
+      // Ajouter le participant au tableau
+      participants.push({ name, score });
+
+      // Afficher le score actuel
+      document.getElementById('result').innerHTML = `${name}, vous avez obtenu <strong>${score}/5</strong> !`;
+
+      // Trier les participants par score
+      const sorted = participants.slice().sort((a, b) => b.score - a.score);
+
+      // Afficher le classement
+      let html = `<h3>🎯 Classement actuel :</h3><ul>`;
+      sorted.forEach((p, index) => {
+        html += `<li class="${index === 0 ? 'winner' : ''}">${index + 1}. ${p.name} - ${p.score}/5</li>`;
+      });
+      html += `</ul>`;
+
+      document.getElementById('classement').innerHTML = html;
+
+      // Réinitialiser le formulaire pour un autre participant
+      document.getElementById('quizForm').reset();
+    });
+  </script>
+</body>
+</html>
+
+
